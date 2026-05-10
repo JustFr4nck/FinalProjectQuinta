@@ -1,3 +1,79 @@
-/* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+
+:root {
+  --bg-dark: #050505;
+  --neon-violet: #bc13fe;
+  --neon-orange: #ff6000;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-dark);
+  color: #e0e0e0;
+  font-family: 'Fira Code', monospace;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.1) 50%
+  ),
+  linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ambient-glow {
+  position: fixed;
+  top: 20%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: var(--neon-violet);
+  filter: blur(150px);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+  animation: float 20s infinite alternate;
+}
+
+.ambient-glow-2 {
+  position: fixed;
+  bottom: 10%;
+  right: -5%;
+  width: 350px;
+  height: 350px;
+  background: var(--neon-orange);
+  filter: blur(130px);
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
+  animation: float 15s infinite alternate-reverse;
+}
+
+@keyframes float {
+  from { transform: translate(0, 0); }
+  to { transform: translate(100px, 50px); }
+}

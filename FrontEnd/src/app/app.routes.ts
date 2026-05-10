@@ -20,6 +20,6 @@ export const routes: Routes = [
     {path: "eliminaMovimento", component: EliminaMov},
     {path: "convertiInUSD", component: ConvertiInUSD},
     {path: "convertiInBTC", component: ConvertiInBTC},
-    {path: "", redirectTo: ""}
+    {path: "**", redirectTo: ""}
 
 ];

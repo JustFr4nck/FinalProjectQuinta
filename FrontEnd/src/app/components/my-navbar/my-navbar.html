@@ -1,0 +1,71 @@
+<nav class="nav-crazy border-b-2 border-violet-900/50 h-20 flex items-center sticky top-0 z-[100]">
+  <div class="max-w-full w-full mx-auto px-6 flex justify-between items-center">
+
+
+    <div class="relative group cursor-pointer">
+      <div class="absolute -inset-1 bg-gradient-to-r from-orange-600 to-violet-600 rounded blur opacity-25 group-hover:opacity-100 transition duration-1000"></div>
+      <a routerLink="/" class="relative bg-black px-4 py-1 border rounded-lg border-violet-500 text-sm font-bold tracking-tighter">
+        <span class="text-white font-mono">Franck</span><span class="text-orange-500 font-mono">BANK</span>
+      </a>
+    </div>
+
+
+    <div class="hidden lg:flex space-x-8">
+      <a *ngFor="let link of navLinks"
+         [routerLink]="link.path"
+         routerLinkActive="active-link"
+         class="crazy-link text-[11px] font-black">
+        <span class="opacity-40 text-white mr-1">></span>{{ getCrazyLabel(link.label) }}
+      </a>
+    </div>
+
+
+    <div class="lg:hidden flex items-center z-[110]">
+      <button (click)="toggleMenu()" class="relative group p-2 focus:outline-none">
+        <div class="flex flex-col justify-between w-8 h-5 transform transition-all duration-300">
+          <span [ngClass]="isMenuOpen ? 'rotate-45 translate-y-2 w-8' : 'w-8'" class="h-[2px] bg-orange-500 shadow-[0_0_8px_#f97316] transition-all duration-300"></span>
+          <span [ngClass]="isMenuOpen ? 'opacity-0' : 'w-6'" class="h-[2px] bg-violet-500 shadow-[0_0_8px_#bc13fe] transition-all duration-300 ml-auto"></span>
+          <span [ngClass]="isMenuOpen ? '-rotate-45 -translate-y-2 w-8' : 'w-4'" class="h-[2px] bg-orange-500 shadow-[0_0_8px_#f97316] transition-all duration-300 ml-auto"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+
+  <div *ngIf="isMenuOpen"
+       (click)="toggleMenu()"
+       class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[101] lg:hidden animate-fade-in">
+  </div>
+
+
+  <div [ngClass]="isMenuOpen ? 'translate-x-0' : 'translate-x-full'"
+       class="fixed top-0 right-0 h-full w-[80%] sm:w-[400px] bg-black/95 border-l-2 border-violet-600 z-[105] lg:hidden transition-transform duration-500 ease-in-out shadow-[-10px_0_30px_rgba(188,19,254,0.2)]">
+
+    <div class="p-8 pt-24 flex flex-col space-y-6 h-full relative overflow-hidden">
+
+      <div class="nav-crazy::before opacity-20"></div>
+
+      <div class="text-violet-500 font-mono text-[10px] mb-4 tracking-[0.2em] border-b border-violet-900/50 pb-2">
+        // MAIN_TERMINAL_ACCESS
+      </div>
+
+      <a *ngFor="let link of navLinks; let i = index"
+         [routerLink]="link.path"
+         (click)="toggleMenu()"
+         routerLinkActive="text-orange-500 translate-x-4"
+         class="crazy-link text-lg font-bold flex items-center transition-all duration-300 hover:translate-x-4">
+        <span class="text-xs text-violet-700 mr-4 font-mono">0{{i+1}}</span>
+        {{ getCrazyLabel(link.label) }}
+      </a>
+
+      <!-- Decorazione fondo menu -->
+      <div class="mt-auto pt-10">
+        <div class="text-[9px] font-mono text-orange-950 uppercase tracking-widest leading-loose">
+          Session: active<br>
+          Encryption: 256-bit<br>
+          Status: <span class="text-green-600 underline">Connected</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
