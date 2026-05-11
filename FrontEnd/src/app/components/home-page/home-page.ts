@@ -1,5 +1,7 @@
 import { CommonModule, NgClass, NgSwitch } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AccountBalance, Transaction } from '../../models/saldo.model';
+import { BankService } from '../../services/bank.service';
 
 @Component({
   selector: 'app-home-page',
@@ -7,17 +9,41 @@ import { Component } from '@angular/core';
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })
-export class HomePage {
+
+export class HomePage implements OnInit {
 
 
-//verrà rimossa al momento del collegamento col backend!!!
-movimenti = [
-  { titolo: 'Stipendio Franck Corp', data: '27 APR 2024', ora: '09:00', importo: 2450.00, categoria: 'salary', tipo: 'entrata' },
-  { titolo: 'Apple Store Milano', data: '26 APR 2024', ora: '14:32', importo: -1299.00, categoria: 'tech', tipo: 'uscita' },
-  { titolo: 'Amazon.it', data: '25 APR 2024', ora: '18:22', importo: -89.99, categoria: 'shopping', tipo: 'uscita' },
-  { titolo: 'Netflix Subscription', data: '20 APR 2024', ora: '02:15', importo: -17.99, categoria: 'service', tipo: 'uscita' },
-  { titolo: 'Rimborso Spese', data: '18 APR 2024', ora: '11:00', importo: 150.00, categoria: 'refund', tipo: 'entrata' }
-];
+  data?: AccountBalance;
+  movimenti: Transaction[] = [];
+
+  constructor(private bankService: BankService) {}
+
+  ngOnInit(): void {
+
+      this.bankService.getAccountBalance(1).subscribe({
+        next: (response) => {
+          this.data = response;
+        },
+        error: (err) => {
+          console.error("Error during call:", err);
+        }
+      });
+
+      this.bankService.getTransactions(1).subscribe({
+        next: (response: any) => {
+          this.movimenti = response;
+        },
+        error: (err) => {
+           console.error("Error during call:", err);
+        }
+      })
+  }
+
+
+
+
+
+
 
 moneyRain = Array.from({ length: 40 }, (_, i) => {
   const isNear = Math.random() > 0.7;
