@@ -6,8 +6,7 @@ import { Prelievo } from './pages/prelievo/prelievo';
 import { Deposito } from './pages/deposito/deposito';
 import { ModificaDesc } from './pages/modifica-desc/modifica-desc';
 import { EliminaMov } from './pages/elimina-mov/elimina-mov';
-import { ConvertiInUSD } from './pages/converti-in-usd/converti-in-usd';
-import { ConvertiInBTC } from './pages/converti-in-btc/converti-in-btc';
+
 
 export const routes: Routes = [
 
@@ -18,8 +17,6 @@ export const routes: Routes = [
     {path: "deposito", component: Deposito},
     {path: "ModificaDescrizione", component: ModificaDesc},
     {path: "eliminaMovimento", component: EliminaMov},
-    {path: "convertiInUSD", component: ConvertiInUSD},
-    {path: "convertiInBTC", component: ConvertiInBTC},
     {path: "**", redirectTo: ""}
 
 ];

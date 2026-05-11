@@ -1,4 +1,4 @@
-<!-- SFONDO: PIOGGIA DI VALUTA -->
+<!--Animation icons falling-->
 <div class="fixed inset-0 pointer-events-none overflow-hidden bg-black">
   <div *ngFor="let item of moneyRain"
        class="money-item absolute font-black select-none"
@@ -16,10 +16,11 @@
   </div>
 </div>
 
-<!-- CONTENUTO PRINCIPALE -->
+<!--Saldo div-->
+
 <div class="relative z-10 flex flex-col items-center pt-6 min-h-screen px-4">
 
-  <!-- SEZIONE SALDO -->
+
   <div class="w-full max-w-2xl bg-black/60 backdrop-blur-3xl border-2 border-violet-500/30 rounded-[3rem] p-12 mb-10 shadow-[0_0_80px_rgba(139,92,246,0.15)] relative overflow-hidden group">
     <div class="absolute -top-20 -right-20 w-64 h-64 bg-violet-600/30 blur-[100px] rounded-full group-hover:bg-violet-600/50 transition-all duration-1000"></div>
     <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-orange-500/20 blur-[100px] rounded-full"></div>
@@ -30,27 +31,77 @@
       <div class="flex flex-col items-center">
         <h2 class="text-white/40 font-mono text-xs mb-4 tracking-widest uppercase">Available_Funds</h2>
         <div class="text-6xl md:text-8xl font-black tracking-tighter text-white flex items-center justify-center gap-2">
-          <span class="text-orange-500 text-3xl font-light">$</span>
-          <!-- Aggiunta gestione safe navigation e centesimi dinamici se vuoi, o lasciati fissi .00 come da tua grafica -->
+          <span class="text-orange-500 text-3xl font-light">€</span>
           {{ data?.balance }}<span class="text-violet-600 font-thin text-5xl">.00</span>
         </div>
       </div>
 
       <div class="mt-12 pt-8 border-t border-white/10 flex justify-around items-center">
-        <div class="text-center group/stat">
-          <p class="text-gray-500 text-[9px] uppercase tracking-[0.3em] mb-2">Inbound</p>
-          <p class="text-green-400 font-mono text-xl font-bold drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]">+€ 4.120</p>
-        </div>
-        <div class="h-12 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
-        <div class="text-center">
-          <p class="text-gray-500 text-[9px] uppercase tracking-[0.3em] mb-2">Outbound</p>
-          <p class="text-red-500 font-mono text-xl font-bold drop-shadow-[0_0_8px_rgba(239,68,68,0.4)]">-€ 1.290</p>
-        </div>
+
+  <!-- INBOUND and OUTBOUND -->
+  <div class="text-center group/stat">
+    <p class="text-gray-500 text-[9px] uppercase tracking-[0.3em] mb-2">Inbound</p>
+    <p class="text-green-400 font-mono text-xl font-bold drop-shadow-[0_0_8px_rgba(34,197,94,0.4)]">
+      +€ {{ inboundTotal | number:'1.2-2' }}
+    </p>
+  </div>
+
+  <div class="h-12 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
+
+  <div class="text-center">
+    <p class="text-gray-500 text-[9px] uppercase tracking-[0.3em] mb-2">Outbound</p>
+    <p class="text-red-500 font-mono text-xl font-bold drop-shadow-[0_0_8px_rgba(239,68,68,0.4)]">
+      -€ {{ outboundTotal | number:'1.2-2' }}
+    </p>
+  </div>
+
+</div>
+    </div>
+  </div>
+
+<!--BTC DIV-->
+<div class="w-full max-w-2xl grid grid-cols-2 gap-4 mb-10">
+
+  <div class="group relative overflow-hidden bg-black/40 backdrop-blur-xl border border-violet-500/20 p-4 rounded-2xl hover:border-orange-500/50 transition-all duration-500">
+
+    <div class="absolute -inset-1 bg-gradient-to-r from-orange-600/10 to-transparent rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
+
+    <div class="relative z-10 flex flex-col">
+      <div class="flex justify-between items-center mb-1">
+        <span class="text-violet-400 font-mono text-[8px] uppercase tracking-[0.3em]">// ASSET_BTC</span>
+        <span class="text-orange-500 text-xs animate-pulse">₿</span>
+      </div>
+      <div class="flex items-baseline gap-2">
+        <span class="text-white font-black font-mono text-xl tracking-tighter">
+          {{ conversionBTC?.converted_amount }}
+        </span>
+        <span class="text-white/30 font-mono text-[10px]">BTC</span>
       </div>
     </div>
   </div>
 
-  <!-- SEZIONE MOVIMENTI -->
+  <!--USD div-->
+  <div class="group relative overflow-hidden bg-black/40 backdrop-blur-xl border border-violet-500/20 p-4 rounded-2xl hover:border-violet-500/50 transition-all duration-500">
+
+    <div class="absolute -inset-1 bg-gradient-to-r from-violet-600/10 to-transparent rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
+
+    <div class="relative z-10 flex flex-col">
+      <div class="flex justify-between items-center mb-1">
+        <span class="text-violet-400 font-mono text-[8px] uppercase tracking-[0.3em]">// ASSET_USD</span>
+        <span class="text-violet-500 text-xs">$</span>
+      </div>
+      <div class="flex items-baseline gap-2">
+        <span class="text-white font-black font-mono text-xl tracking-tighter">
+          {{ conversionUSD?.converted_balance }}
+        </span>
+        <span class="text-white/30 font-mono text-[10px]">USD</span>
+      </div>
+    </div>
+  </div>
+
+  <!--movements div-->
+</div>
+
   <div class="w-full max-w-2xl mx-auto pb-20">
     <div class="flex justify-between items-end mb-8 px-6">
       <div>
@@ -61,7 +112,6 @@
     </div>
 
     <div class="space-y-4">
-      <!-- Ciclo corretto: rimosso l'errore sui nomi dei campi -->
       <div *ngFor="let move of movimenti; let i = index"
            class="crazy-row group relative overflow-hidden bg-white/[0.03] border border-white/5 p-5 rounded-xl hover:bg-violet-900/10 transition-all duration-300">
 
@@ -70,7 +120,6 @@
         <div class="flex items-center justify-between relative z-10">
           <div class="flex items-center gap-5">
             <div class="w-12 h-12 rounded-lg bg-black border border-white/10 flex items-center justify-center group-hover:border-violet-500 shadow-inner transition-colors">
-              <!-- Cambiato: controllo su 'deposit' -->
               <span class="text-xl group-hover:scale-125 transition-transform"
                     [ngClass]="move.type === 'deposit' ? 'text-green-500' : 'text-red-500'">
                 {{ move.type === 'deposit' ? '◈' : '◇' }}
@@ -78,12 +127,10 @@
             </div>
 
             <div>
-              <!-- Cambiato: move.description -->
               <h4 class="text-white font-black text-sm uppercase tracking-tight group-hover:text-violet-300 transition-colors">
                 {{ move.description }}
               </h4>
               <div class="flex items-center gap-3 mt-1">
-                <!-- Cambiato: move.created_at -->
                 <p class="text-white/30 text-[9px] font-mono tracking-widest italic">{{ move.created_at | date:'dd/MM/yyyy HH:mm' }}</p>
                 <span class="w-1 h-1 rounded-full bg-white/20"></span>
                 <p class="text-violet-500/50 text-[9px] font-mono">REF_{{ move.id }}X99</p>
@@ -92,7 +139,6 @@
           </div>
 
           <div class="text-right">
-            <!-- Cambiato: move.type === 'withdrawal' e move.amount -->
             <p class="font-mono text-lg font-black tracking-tighter"
                [ngClass]="move.type === 'withdrawal' ? 'text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'text-green-400 drop-shadow-[0_0_10px_rgba(74,222,128,0.3)]'">
               {{ move.type === 'withdrawal' ? '-' : '+' }}{{ move.amount | currency:'EUR':'symbol':'1.2-2' }}

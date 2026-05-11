@@ -35,14 +35,12 @@ export class MyNavbar implements OnInit {
 
   getCrazyLabel(label: string): string {
     const mapping: { [key: string]: string } = {
-      'listaMovimenti': 'FETCH_LOGS',
-      'movDetails': 'DATA_DECRYPT',
-      'prelievo': 'OUT_LIQUIDITY',
-      'deposito': 'IN_LIQUIDITY',
-      'ModificaDescrizione': 'PATCH_META',
-      'eliminaMovimento': 'PURGE_ENTRY',
-      'convertiInUSD': 'EXCHANGE_FIAT',
-      'convertiInBTC': 'MINE_CRYPTO'
+      'listaMovimenti': 'TRANSACTIONS_LIST',
+      'movDetails': 'TRANSACTION_DETAIL',
+      'prelievo': 'DEPOSIT',
+      'deposito': 'WITHDRAW',
+      'ModificaDescrizione': 'MODIFY_DESCRIPTION',
+      'eliminaMovimento': 'DELETE_MOVEMENT'
     };
     return mapping[label] || label.toUpperCase();
   }
