@@ -1,68 +1,111 @@
 <nav class="nav-crazy border-b-2 border-violet-900/50 h-20 flex items-center sticky top-0 z-[100]">
   <div class="max-w-full w-full mx-auto px-6 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <!-- Contenitore allineato -->
 
+      <!-- ICONA VOLPE (Statica e allineata) -->
+      <div class="relative w-12 h-12 flex items-center justify-center flex-shrink-0">
+        <!-- Bagliore soft fisso -->
+        <div class="absolute inset-0 bg-violet-600/10 rounded-full blur-lg"></div>
 
-    <div class="relative group cursor-pointer">
-      <div class="absolute -inset-1 bg-gradient-to-r from-orange-600 to-violet-600 rounded blur opacity-25 group-hover:opacity-100 transition duration-1000"></div>
-      <a routerLink="/" class="relative bg-black px-4 py-1 border rounded-lg border-violet-500 text-sm font-bold tracking-tighter">
-        <span class="text-white font-mono">Franck</span><span class="text-orange-500 font-mono">BANK</span>
-      </a>
+        <svg xmlns="http://w3.org" viewBox="0 0 100 100" class="w-full h-full relative z-10">
+          <!-- Orecchie (Viola) -->
+          <path d="M25 35 L40 55 L20 50 Z" fill="#7C3AED" />
+          <path d="M75 35 L60 55 L80 50 Z" fill="#7C3AED" />
+          <!-- Muso (Arancione) -->
+          <path d="M50 85 L20 50 L50 40 L80 50 Z" fill="#F97316" />
+          <!-- Dettaglio superiore -->
+          <path d="M50 40 L35 45 L50 55 L65 45 Z" fill="#5B21B6" />
+          <!-- Naso e Occhi -->
+          <path d="M47 85 L53 85 L50 89 Z" fill="#000" />
+          <path d="M38 58 L45 62" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+          <path d="M62 58 L55 62" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+      </div>
+
+      <!-- LOGO TEXT (Con Hover ripristinato) -->
+      <div class="relative group cursor-pointer">
+        <!-- Effetto Hover solo qui -->
+        <div
+          class="absolute -inset-1 bg-gradient-to-r from-orange-600 to-violet-600 rounded-lg blur opacity-0 group-hover:opacity-40 transition duration-500"
+        ></div>
+
+        <a
+          routerLink="/"
+          class="relative bg-black px-4 py-2 border rounded-lg border-violet-500/50 group-hover:border-violet-500 transition-colors flex items-center h-10"
+        >
+          <span class="text-white font-mono text-base font-bold">Franck</span>
+          <span class="text-orange-500 font-mono text-base font-bold ml-1">BANK</span>
+        </a>
+      </div>
     </div>
 
-
     <div class="hidden lg:flex space-x-8">
-      <a *ngFor="let link of navLinks"
-         [routerLink]="link.path"
-         routerLinkActive="active-link"
-         class="crazy-link text-[11px] font-black">
+      <a
+        *ngFor="let link of navLinks"
+        [routerLink]="link.path"
+        routerLinkActive="active-link"
+        class="crazy-link text-[11px] font-black"
+      >
         <span class="opacity-40 text-white mr-1">></span>{{ getCrazyLabel(link.label) }}
       </a>
     </div>
 
-
     <div class="lg:hidden flex items-center z-[110]">
       <button (click)="toggleMenu()" class="relative group p-2 focus:outline-none">
         <div class="flex flex-col justify-between w-8 h-5 transform transition-all duration-300">
-          <span [ngClass]="isMenuOpen ? 'rotate-45 translate-y-2 w-8' : 'w-8'" class="h-[2px] bg-orange-500 shadow-[0_0_8px_#f97316] transition-all duration-300"></span>
-          <span [ngClass]="isMenuOpen ? 'opacity-0' : 'w-6'" class="h-[2px] bg-violet-500 shadow-[0_0_8px_#bc13fe] transition-all duration-300 ml-auto"></span>
-          <span [ngClass]="isMenuOpen ? '-rotate-45 -translate-y-2 w-8' : 'w-4'" class="h-[2px] bg-orange-500 shadow-[0_0_8px_#f97316] transition-all duration-300 ml-auto"></span>
+          <span
+            [ngClass]="isMenuOpen ? 'rotate-45 translate-y-2 w-8' : 'w-8'"
+            class="h-[2px] bg-orange-500 shadow-[0_0_8px_#f97316] transition-all duration-300"
+          ></span>
+          <span
+            [ngClass]="isMenuOpen ? 'opacity-0' : 'w-6'"
+            class="h-[2px] bg-violet-500 shadow-[0_0_8px_#bc13fe] transition-all duration-300 ml-auto"
+          ></span>
+          <span
+            [ngClass]="isMenuOpen ? '-rotate-45 -translate-y-2 w-8' : 'w-4'"
+            class="h-[2px] bg-orange-500 shadow-[0_0_8px_#f97316] transition-all duration-300 ml-auto"
+          ></span>
         </div>
       </button>
     </div>
   </div>
 
+  <div
+    *ngIf="isMenuOpen"
+    (click)="toggleMenu()"
+    class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[101] lg:hidden animate-fade-in"
+  ></div>
 
-  <div *ngIf="isMenuOpen"
-       (click)="toggleMenu()"
-       class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[101] lg:hidden animate-fade-in">
-  </div>
-
-
-  <div [ngClass]="isMenuOpen ? 'translate-x-0' : 'translate-x-full'"
-       class="fixed top-0 right-0 h-full w-[80%] sm:w-[400px] bg-black/95 border-l-2 border-violet-600 z-[105] lg:hidden transition-transform duration-500 ease-in-out shadow-[-10px_0_30px_rgba(188,19,254,0.2)]">
-
+  <div
+    [ngClass]="isMenuOpen ? 'translate-x-0' : 'translate-x-full'"
+    class="fixed top-0 right-0 h-full w-[80%] sm:w-[400px] bg-black/95 border-l-2 border-violet-600 z-[105] lg:hidden transition-transform duration-500 ease-in-out shadow-[-10px_0_30px_rgba(188,19,254,0.2)]"
+  >
     <div class="p-8 pt-24 flex flex-col space-y-6 h-full relative overflow-hidden">
-
       <div class="nav-crazy::before opacity-20"></div>
 
-      <div class="text-violet-500 font-mono text-[10px] mb-4 tracking-[0.2em] border-b border-violet-900/50 pb-2">
+      <div
+        class="text-violet-500 font-mono text-[10px] mb-4 tracking-[0.2em] border-b border-violet-900/50 pb-2"
+      >
         // MAIN_TERMINAL_ACCESS
       </div>
 
-      <a *ngFor="let link of navLinks; let i = index"
-         [routerLink]="link.path"
-         (click)="toggleMenu()"
-         routerLinkActive="text-orange-500 translate-x-4"
-         class="crazy-link text-lg font-bold flex items-center transition-all duration-300 hover:translate-x-4">
-        <span class="text-xs text-violet-700 mr-4 font-mono">0{{i+1}}</span>
+      <a
+        *ngFor="let link of navLinks; let i = index"
+        [routerLink]="link.path"
+        (click)="toggleMenu()"
+        routerLinkActive="text-orange-500 translate-x-4"
+        class="crazy-link text-lg font-bold flex items-center transition-all duration-300 hover:translate-x-4"
+      >
+        <span class="text-xs text-violet-700 mr-4 font-mono">0{{ i + 1 }}</span>
         {{ getCrazyLabel(link.label) }}
       </a>
 
       <!-- Decorazione fondo menu -->
       <div class="mt-auto pt-10">
         <div class="text-[9px] font-mono text-orange-950 uppercase tracking-widest leading-loose">
-          Session: active<br>
-          Encryption: 256-bit<br>
+          Session: active<br />
+          Encryption: 256-bit<br />
           Status: <span class="text-green-600 underline">Connected</span>
         </div>
       </div>

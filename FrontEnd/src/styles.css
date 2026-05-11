@@ -92,3 +92,17 @@ body::after {
     transparent 80%
   );
 }
+
+
+@keyframes fall-complex {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+.money-item {
+  animation: fall-complex 8s linear infinite;
+  will-change: transform;
+}
+
