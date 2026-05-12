@@ -112,7 +112,7 @@
     </div>
 
     <div class="space-y-4">
-      <div *ngFor="let move of movimenti; let i = index"
+      <div *ngFor="let move of movimenti | slice:0:5; let i = index"
            class="crazy-row group relative overflow-hidden bg-white/[0.03] border border-white/5 p-5 rounded-xl hover:bg-violet-900/10 transition-all duration-300">
 
         <div class="absolute left-0 top-0 h-full w-1 bg-violet-600 scale-y-0 group-hover:scale-y-100 transition-transform duration-500 shadow-[0_0_15px_#7c3aed]"></div>
