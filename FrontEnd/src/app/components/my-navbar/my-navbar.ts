@@ -37,10 +37,8 @@ export class MyNavbar implements OnInit {
     const mapping: { [key: string]: string } = {
       'listaMovimenti': 'TRANSACTIONS_LIST',
       'movDetails': 'TRANSACTION_DETAIL',
-      'prelievo': 'DEPOSIT',
-      'deposito': 'WITHDRAW',
-      'ModificaDescrizione': 'MODIFY_DESCRIPTION',
-      'eliminaMovimento': 'DELETE_MOVEMENT'
+      'prelievo': 'WITHDRAW',
+      'deposito': 'DEPOSIT',
     };
     return mapping[label] || label.toUpperCase();
   }

@@ -1,0 +1,58 @@
+.money-item {
+  top: -100px;
+  animation: rain linear infinite;
+  will-change: transform;
+}
+
+@keyframes rain {
+  to { transform: translateY(120vh); }
+}
+
+.particle-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.particle {
+  position: absolute;
+  pointer-events: none;
+  animation: explodeAndFall 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+@keyframes explodeAndFall {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(0);
+    filter: blur(0px);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(var(--tx), var(--ty)) rotate(var(--tr)) scale(1.8);
+    filter: blur(0px);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(var(--tx) * 1.2), 110vh) rotate(calc(var(--tr) * 2)) scale(0.8);
+    filter: blur(2px);
+    opacity: 0;
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="text"]:focus {
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.1);
+  background: rgba(127, 29, 29, 0.1);
+}
+
+::placeholder {
+  font-style: italic;
+  font-size: 0.8rem;
+}

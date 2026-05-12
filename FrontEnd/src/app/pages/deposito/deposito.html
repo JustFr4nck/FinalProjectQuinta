@@ -1,1 +1,67 @@
-<p>deposito works!</p>
+<!-- Background Animation (Pioggia) -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden bg-black z-0">
+  <div *ngFor="let item of moneyRain"
+       class="money-item absolute font-black select-none"
+       [style.left.%]="item.left"
+       [style.animation-duration.s]="item.duration"
+       [style.animation-delay.s]="item.delay"
+       [style.font-size.px]="item.size"
+       [style.opacity]="item.opacity"
+       [style.filter]="'blur(' + item.blur + ')'"
+       [style.z-index]="item.zIndex">
+    <span [ngClass]="item.id % 2 === 0 ? 'text-violet-500' : 'text-orange-500'">
+      {{ item.char }}
+    </span>
+  </div>
+</div>
+
+<div class="min-h-screen flex items-center justify-center p-4 relative bg-transparent font-sans">
+  <div class="particle-container">
+    <span *ngFor="let p of particles"
+          class="particle text-3xl"
+          [style.--tx.px]="p.x"
+          [style.--ty.px]="p.y"
+          [style.--tr.deg]="p.rotate">
+      {{ p.icon }}
+    </span>
+  </div>
+
+  <div class="w-full max-w-md z-10">
+    <div class="bg-gradient-to-br from-white/10 to-white/[0.02] backdrop-blur-3xl border border-white/20 rounded-[2.5rem] p-8 shadow-2xl relative group">
+
+      <div class="text-center mb-8">
+        <p class="text-green-500 text-[10px] font-mono tracking-[0.4em] uppercase mb-2">Security_Level: High</p>
+        <h1 class="text-3xl font-black text-white uppercase tracking-tighter">New Deposit</h1>
+      </div>
+
+      <div class="space-y-6">
+        <div class="relative">
+          <label class="text-[8px] text-white/30 uppercase tracking-widest ml-4 mb-2 block">Amount to Inject</label>
+          <div class="relative">
+            <span class="absolute left-6 top-1/2 -translate-y-1/2 text-green-500 font-bold">€</span>
+            <input type="number" [(ngModel)]="importo" class="w-full bg-black/50 border border-white/10 rounded-2xl py-5 pl-12 pr-6 text-2xl font-black text-white focus:border-green-500/50 outline-none transition-all" placeholder="0.00"/>
+          </div>
+        </div>
+
+
+        <div class="relative">
+          <label class="text-[8px] text-white/30 uppercase tracking-widest ml-4 mb-2 block">Reason / Label</label>
+          <input
+            type="text"
+            [(ngModel)]="descrizione"
+            class="w-full bg-black/50 border border-white/10 rounded-2xl py-4 px-6 text-sm font-mono text-green-400 focus:border-green-500/50 outline-none transition-all placeholder:text-white/10"
+            placeholder="E.g. Monthly Savings, Gift, Bonus..."
+          />
+        </div>
+
+        <button (click)="faiDeposito()" class="relative w-full py-5 bg-green-600 hover:bg-green-500 text-white font-black uppercase tracking-[0.2em] rounded-2xl transition-all active:scale-95 shadow-[0_0_20px_rgba(22,163,74,0.4)]">
+          Confirm Deposit
+        </button>
+      </div>
+
+      <p class="mt-8 text-white/10 text-[7px] text-center uppercase tracking-[0.5em]">
+        Transaction_Encrypted_v2.0 // Hash: {{ (importo * 1.2).toFixed(0) }}
+      </p>
+    </div>
+  </div>
+</div>

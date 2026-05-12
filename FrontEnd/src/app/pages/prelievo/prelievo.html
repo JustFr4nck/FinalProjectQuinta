@@ -1,1 +1,91 @@
-<p>prelievo works!</p>
+<div class="fixed inset-0 pointer-events-none overflow-hidden bg-black z-0">
+  <div
+    *ngFor="let item of moneyRain"
+    class="money-item absolute font-black select-none"
+    [style.left.%]="item.left"
+    [style.animation-duration.s]="item.duration"
+    [style.animation-delay.s]="item.delay"
+    [style.font-size.px]="item.size"
+    [style.opacity]="item.opacity"
+    [style.filter]="'blur(' + item.blur + ')'"
+    [style.z-index]="item.zIndex"
+  >
+    <span class="text-red-900/40">
+      {{ item.char }}
+    </span>
+  </div>
+</div>
+
+<div class="min-h-screen flex items-center justify-center p-4 relative bg-transparent font-sans">
+  <div class="particle-container">
+    <span
+      *ngFor="let p of particles"
+      class="particle text-3xl"
+      [style.--tx.px]="p.x"
+      [style.--ty.px]="p.y"
+      [style.--tr.deg]="p.rotate"
+    >
+      {{ p.icon }}
+    </span>
+  </div>
+
+  <div class="w-full max-w-md z-10">
+    <div
+      class="bg-gradient-to-br from-red-900/20 to-black backdrop-blur-3xl border border-red-500/20 rounded-[2.5rem] p-8 shadow-[0_0_50px_rgba(239,68,68,0.1)] relative group"
+    >
+      <div class="text-center mb-8">
+        <div
+          class="inline-block px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 mb-4"
+        >
+          <p class="text-red-500 text-[9px] font-mono tracking-[0.4em] uppercase">
+            Warning: Capital_Outflow
+          </p>
+        </div>
+        <h1 class="text-3xl font-black text-white uppercase tracking-tighter">Withdraw Funds</h1>
+      </div>
+
+      <div class="space-y-6">
+        <div class="relative">
+          <label class="text-[8px] text-red-500/50 uppercase tracking-widest ml-4 mb-2 block"
+            >Amount to Extract</label
+          >
+
+          <div class="relative">
+            <span class="absolute left-6 top-1/2 -translate-y-1/2 text-red-500 font-bold">€</span>
+            <input
+              type="number"
+              [(ngModel)]="importo"
+              class="w-full bg-black/60 border border-red-500/20 rounded-2xl py-5 pl-12 pr-6 text-2xl font-black text-red-500 focus:border-red-500/50 outline-none transition-all placeholder:text-red-900"
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+
+        <div class="relative mt-4">
+          <label class="text-[8px] text-red-500/50 uppercase tracking-widest ml-4 mb-2 block"
+            >Reason / Label</label
+          >
+          <div class="relative">
+            <input
+              type="text"
+              [(ngModel)]="descrizione"
+              class="w-full bg-black/60 border border-red-500/20 rounded-2xl py-4 px-6 text-sm font-mono text-red-400 focus:border-red-500/50 outline-none transition-all placeholder:text-red-900/50"
+              placeholder="E.g. Rent, Groceries, Secret stash..."
+            />
+          </div>
+        </div>
+
+        <button
+          (click)="faiPrelievo()"
+          class="relative w-full py-5 bg-red-600 hover:bg-red-500 text-white font-black uppercase tracking-[0.2em] rounded-2xl transition-all active:scale-95 shadow-[0_0_25px_rgba(220,38,38,0.4)]"
+        >
+          Confirm Withdrawal
+        </button>
+      </div>
+
+      <p class="mt-8 text-red-500/20 text-[7px] text-center uppercase tracking-[0.5em]">
+        Auth_Key: {{ (importo * 1.5).toFixed(0) }} // SECURE_OUT
+      </p>
+    </div>
+  </div>
+</div>

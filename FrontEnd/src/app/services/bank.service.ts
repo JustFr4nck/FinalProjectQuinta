@@ -49,4 +49,10 @@ export class BankService {
 
   }
 
+  //withdrawals
+  doWithdrawals(idAccount: number, data: Partial<Transaction>): Observable<Transaction>{
+    const url = `${this.apiUrl}/${idAccount}/withdrawals`;
+    return this.http.post<Transaction>(url, data);
+  }
+
 }
