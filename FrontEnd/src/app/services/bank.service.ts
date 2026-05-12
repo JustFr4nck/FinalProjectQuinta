@@ -31,4 +31,22 @@ export class BankService {
     return this.http.get<ConversionBTC>(`${this.apiUrl}/${idAccount}/balance/convert/crypto?to=BTC`);
   }
 
+  //transaction details
+  getTransactionDet(idAccount: number, id:number): Observable<Transaction>{
+    return this.http.get<Transaction>(`${this.apiUrl}/${idAccount}/transactions/${id}`);
+  }
+
+  //update description
+  updateDescTrans(idAccount: number, id: number, newDescription: string): Observable<Transaction> {
+  const url = `${this.apiUrl}/${idAccount}/transactions/${id}`;
+  return this.http.put<Transaction>(url, { description: newDescription });
+  }
+
+  //delete transiction
+  deleteTrans(idAccount: number, id: number): Observable<any>{
+    const url = `${this.apiUrl}/${idAccount}/transactions/${id}`;
+    return this.http.delete(url);
+
+  }
+
 }

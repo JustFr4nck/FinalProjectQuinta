@@ -1,1 +1,118 @@
-<p>mov-details works!</p>
+<!-- Background Animation -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden bg-black">
+  <div *ngFor="let item of moneyRain"
+       class="money-item absolute font-black select-none"
+       [style.left.%]="item.left"
+       [style.animation-duration.s]="item.duration"
+       [style.animation-delay.s]="item.delay"
+       [style.font-size.px]="item.size"
+       [style.opacity]="item.opacity"
+       [style.filter]="'blur(' + item.blur + ')'"
+       [style.z-index]="item.zIndex">
+
+    <span [ngClass]="item.id % 2 === 0 ? 'text-violet-500' : 'text-orange-500'">
+      {{ item.char }}
+    </span>
+  </div>
+</div>
+
+<div
+  class="relative z-10 flex flex-col items-center justify-center min-h-screen p-4 md:p-8 font-sans"
+>
+  <div class="sticky top-4 z-20 w-full max-w-2xl mb-8 self-center">
+    <a
+      routerLink="/lista-mov"
+      class="inline-flex items-center gap-3 bg-white/5 backdrop-blur-2xl border border-white/10 px-5 py-2 rounded-full shadow-2xl hover:bg-white/10 transition-all active:scale-95 group"
+    >
+      <span class="text-violet-400 group-hover:-translate-x-1 transition-transform">←</span>
+      <span class="text-white/70 text-[10px] font-bold uppercase tracking-[0.2em]"
+        >Go back</span
+      >
+    </a>
+  </div>
+
+  <div
+    class="w-full max-w-2xl bg-gradient-to-br from-white/10 to-white/[0.02] backdrop-blur-3xl border border-white/20 rounded-[2.5rem] md:rounded-[4rem] p-6 md:p-10 shadow-2xl relative overflow-hidden group"
+  >
+    <div
+      class="absolute -top-24 -right-24 w-64 h-64 bg-violet-600/20 blur-[80px] rounded-full group-hover:bg-violet-600/30 transition-all duration-1000 hidden md:block"
+    ></div>
+    <div
+      class="absolute -bottom-24 -left-24 w-64 h-64 bg-orange-500/10 blur-[80px] rounded-full hidden md:block"
+    ></div>
+
+    <div class="relative z-10">
+      <div class="flex justify-center mb-8">
+        <span
+          class="px-4 py-1 rounded-full bg-black/40 border border-white/5 text-[9px] font-mono text-violet-400 tracking-[0.3em] uppercase"
+        >
+          Node_Ref: {{ movimento?.id }}
+        </span>
+      </div>
+
+      <div
+        class="bg-black/30 rounded-[2rem] p-6 md:p-10 border border-white/5 mb-6 transition-all hover:border-violet-500/20 text-center"
+      >
+        <p class="text-white/20 text-[8px] uppercase tracking-[0.4em] mb-3 font-mono">
+          label_detail
+        </p>
+
+        <div *ngIf="!isEditing; else editInput">
+          <h1 class="text-2xl md:text-4xl font-bold text-white tracking-tight leading-snug">
+            {{ movimento?.description }}
+          </h1>
+        </div>
+
+        <ng-template #editInput>
+          <input
+            [(ngModel)]="mockDesc"
+            class="w-full bg-transparent text-2xl md:text-4xl font-bold text-orange-500 tracking-tight outline-none text-center border-b border-orange-500/50 pb-2"
+            (keyup.enter)="saveDescription()"
+            autofocus
+          />
+          <p
+            class="text-orange-500 text-[8px] mt-3 uppercase tracking-tighter animate-pulse font-mono"
+          >
+            Editing Mode Active
+          </p>
+        </ng-template>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+        <div
+          class="bg-white/[0.03] rounded-3xl p-5 border border-white/5 flex flex-col items-center"
+        >
+          <p class="text-white/20 text-[8px] uppercase tracking-widest mb-1">Amount</p>
+          <p class="text-xl md:text-2xl font-black text-green-400 font-mono">{{movimento?.amount}}</p>
+        </div>
+        <div
+          class="bg-white/[0.03] rounded-3xl p-5 border border-white/5 flex flex-col items-center"
+        >
+          <p class="text-white/20 text-[8px] uppercase tracking-widest mb-1">Data</p>
+          <p class="text-lg md:text-xl font-bold text-white/80">{{movimento?.created_at}}</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <button
+          (click)="toggleEdit()"
+          class="w-full py-4 rounded-2xl md:rounded-[2rem] bg-violet-600 text-white text-[10px] font-black uppercase tracking-[0.2em] hover:bg-violet-500 hover:scale-[1.01] active:scale-95 transition-all shadow-lg shadow-violet-900/20"
+        >
+          {{ isEditing ? 'Save' : 'Modify label' }}
+        </button>
+
+        <a
+          routerLink="/lista-mov"
+          class="w-full py-4 rounded-2xl md:rounded-[2rem] bg-white/5 border border-white/10 text-red-500 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-red-500/10 hover:border-red-500/50 transition-all text-center"
+          (click)="deleteMov()"
+          >
+          Delete Record
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <p class="mt-8 text-white/10 text-[8px] uppercase tracking-[0.6em] text-center">
+    Terminal_Encrypted_Session // {{ currentYear }}
+  </p>
+</div>

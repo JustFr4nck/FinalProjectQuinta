@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { BankService } from '../../services/bank.service';
 import { Transaction } from '../../models/saldo.model';
 
@@ -14,7 +15,8 @@ export class ListaMov implements OnInit{
 
   movimenti: Transaction[] = [];
 
-  constructor(private bankService: BankService) {}
+  constructor(private bankService: BankService, private router: Router) {}
+
 
   ngOnInit(): void {
     this.bankService.getTransactions(1).subscribe({
@@ -26,6 +28,8 @@ export class ListaMov implements OnInit{
         }
     })
   }
+
+  
 
   moneyRain = Array.from({ length: 40 }, (_, i) => {
   const isNear = Math.random() > 0.7;

@@ -16,7 +16,7 @@ export class MyNavbar implements OnInit {
 
   ngOnInit(): void {
     this.navLinks = routes
-      .filter(route => route.path !== "" && route.path !== undefined && route.path !== "**")
+      .filter(route => route.path !== "" && route.path !== undefined && route.path !== "**" && !route.path.includes(':'))
       .map(route => ({
         path: `/${route.path}`,
         label: route.path!
