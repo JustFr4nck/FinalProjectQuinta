@@ -57,14 +57,14 @@ class MovimentiController
 
   }
 
-  // ? POST /accounts/{idAccount}/deposits
+  // ? POST /accounts/{idAccount}/deposit
   public function create(Request $request, Response $response, $args){
 
     $this->mysqli->getConnection();
     $id = $args['idAccount'];
     $body = json_decode($request->getBody(), true);
     $importo = $body['amount'] ?? 0;
-    $descrizione = $body['descriprion'] ?? 'nessuna descrizione sul deposito';
+    $descrizione = $body['description'] ?? 'nessuna descrizione sul deposito';
 
     if($importo <= 0){
       $response->getBody()->write(json_encode(["ERRORE!" => "L'importo deve essere maggiore di zero"]));
@@ -90,10 +90,10 @@ class MovimentiController
 
     $this->mysqli->getConnection();
 
-    $id = $args['idAccount'];
+    $id = intval($args['idAccount']);
     $body = json_decode($request->getBody(), true);
     $importo = $body['amount'] ?? 0;
-    $descrizione = $body['descriprion'] ?? 'nessuna descrizione sul prelievo';
+    $descrizione = $body['description'] ?? 'nessuna descrizione sul prelievo';
 
     if($importo <= 0){
       $response->getBody()->write(json_encode(["ERRORE!" => "L'importo deve essere maggiore di zero"]));
@@ -105,15 +105,15 @@ class MovimentiController
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-    $saldo_attuale = $row['saldo'] ?? 0;
+    $saldo_attuale = floatval($row['amount']) ?? 0;
 
-    if($saldo_attuale > $importo){
+    if($importo > $saldo_attuale){
 
       $response->getBody()->write(json_encode(["ERRORE!" => "L'importo richiesto non può essere superiore del saldo disponibile"]));
       return $response->withHeader("Content-type", "Application/json")->withStatus(422);
     }
 
-    $stmt = $this->mysqli->getConnection()->prepare("INSERT INTO transactions ('account_id', 'type', 'amount', 'description') VALUES (?, 'withdrawal', ?, ?)");
+    $stmt = $this->mysqli->getConnection()->prepare("INSERT INTO transactions (account_id, type, amount, description) VALUES (?, 'withdrawal', ?, ?)");
     $importoDaRimuovere = -$importo;
     $stmt->bind_param("ids", $id, $importoDaRimuovere, $descrizione);
     

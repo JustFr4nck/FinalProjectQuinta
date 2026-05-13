@@ -1,7 +1,7 @@
 import { Transaction } from './../../models/saldo.model';
 import { BankService } from './../../services/bank.service';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -12,10 +12,14 @@ import { Router } from '@angular/router';
   templateUrl: './prelievo.html',
   styleUrl: './prelievo.css',
 })
-export class Prelievo {
+export class Prelievo implements OnInit {
   importo: number = 0;
   particles: any[] = [];
   descrizione: string = '';
+
+
+  saldoDisponibile: number = 0;
+  tagliRapidi: number[] = [20, 50, 100, 200];
 
   icons = ['💸', '📉', '💨', '🚨', '🥀', '🔻'];
 
@@ -24,9 +28,31 @@ export class Prelievo {
     private router: Router,
   ) {}
 
+   ngOnInit(): void {
+
+      this.bankService.getAccountBalance(1).subscribe({
+        next: (response) => {
+          this.saldoDisponibile = response.balance;
+        },
+        error: (err) => {
+          console.error("Error during call:", err);
+        }
+      });
+   }
+
+  selezionaImportoRapido(valore: number) {
+    this.importo = valore;
+  }
+
   faiPrelievo() {
     if (this.importo <= 0) {
       alert('Insert a valid import');
+      return;
+    }
+
+
+    if (this.importo > this.saldoDisponibile) {
+      alert('Insufficient funds available');
       return;
     }
 
@@ -34,6 +60,7 @@ export class Prelievo {
       amount: Number(this.importo),
       description: this.descrizione || 'No description',
     };
+
 
     this.bankService.doWithdrawals(1, payload).subscribe({
       next: (res) => {

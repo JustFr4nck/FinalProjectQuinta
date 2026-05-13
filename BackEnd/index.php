@@ -9,14 +9,23 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 require __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/controllers/MovimentiController.php';
 require __DIR__ . '/controllers/SaldoController.php';
+require __DIR__ . '/controllers/CustomErrorHandler.php';
 
 
 $app = AppFactory::create();
 
+
+$errorMiddleware = $app->addErrorMiddleware(false, true, true);
+$customErrorHandler = new CustomErrorHandler();
+
+// Imposta l'handler personalizzato come default
+$errorMiddleware->setDefaultErrorHandler($customErrorHandler);
+
+
 // Movimenti
 $app->get('/accounts/{idAccount}/transactions', "MovimentiController:index");
 $app->get('/accounts/{idAccount}/transactions/{idTransaction}', "MovimentiController:show");
-$app->post('/accounts/{idAccount}/deposits', "MovimentiController:create");
+$app->post('/accounts/{idAccount}/deposit', "MovimentiController:create");
 $app->post('/accounts/{idAccount}/withdrawals', "MovimentiController:remove");
 $app->put('/accounts/{idAccount}/transactions/{idTransaction}', "MovimentiController:update");
 $app->delete('/accounts/{idAccount}/transactions/{idTransaction}', "MovimentiController:destroy");

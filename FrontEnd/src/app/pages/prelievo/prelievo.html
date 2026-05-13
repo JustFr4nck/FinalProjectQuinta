@@ -33,7 +33,7 @@
     <div
       class="bg-gradient-to-br from-red-900/20 to-black backdrop-blur-3xl border border-red-500/20 rounded-[2.5rem] p-8 shadow-[0_0_50px_rgba(239,68,68,0.1)] relative group"
     >
-      <div class="text-center mb-8">
+      <div class="text-center mb-6">
         <div
           class="inline-block px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 mb-4"
         >
@@ -42,6 +42,19 @@
           </p>
         </div>
         <h1 class="text-3xl font-black text-white uppercase tracking-tighter">Withdraw Funds</h1>
+      </div>
+
+      <div class="mb-6 p-4 rounded-2xl bg-black/40 border border-red-500/10 flex justify-between items-center">
+        <div>
+          <p class="text-[8px] text-red-500/50 uppercase tracking-widest mb-1">Available Balance</p>
+          <p class="text-xl font-mono font-black text-white">€ {{ saldoDisponibile?.toFixed(2) }}</p>
+        </div>
+        <div class="text-right">
+          <p class="text-[8px] text-red-500/50 uppercase tracking-widest mb-1">Account Status</p>
+          <span class="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 animate-pulse">
+            ● SECURE
+          </span>
+        </div>
       </div>
 
       <div class="space-y-6">
@@ -58,6 +71,17 @@
               class="w-full bg-black/60 border border-red-500/20 rounded-2xl py-5 pl-12 pr-6 text-2xl font-black text-red-500 focus:border-red-500/50 outline-none transition-all placeholder:text-red-900"
               placeholder="0.00"
             />
+          </div>
+
+          <div class="grid grid-cols-4 gap-2 mt-2 px-1">
+            <button
+              *ngFor="let quickAmount of tagliRapidi"
+              type="button"
+              (click)="selezionaImportoRapido(quickAmount)"
+              class="py-2 rounded-xl bg-red-950/20 border border-red-500/10 text-xs font-mono text-red-400 hover:bg-red-500/20 hover:text-white transition-all active:scale-95"
+            >
+              +€{{ quickAmount }}
+            </button>
           </div>
         </div>
 
@@ -77,9 +101,13 @@
 
         <button
           (click)="faiPrelievo()"
-          class="relative w-full py-5 bg-red-600 hover:bg-red-500 text-white font-black uppercase tracking-[0.2em] rounded-2xl transition-all active:scale-95 shadow-[0_0_25px_rgba(220,38,38,0.4)]"
+          [disabled]="importo <= 0 || importo > saldoDisponibile"
+          class="relative w-full py-5 text-white font-black uppercase tracking-[0.2em] rounded-2xl transition-all active:scale-95 shadow-[0_0_25px_rgba(220,38,38,0.4)] disabled:opacity-40 disabled:cursor-not-allowed disabled:scale-100 disabled:shadow-none"
+          [ngClass]="importo > saldoDisponibile ? 'bg-zinc-950 border border-red-500/30 text-red-500/70' : 'bg-red-600 hover:bg-red-500'"
         >
-          Confirm Withdrawal
+          <span *ngIf="importo > saldoDisponibile">Limit Exceeded</span>
+          <span *ngIf="importo <= 0">Enter Amount</span>
+          <span *ngIf="importo > 0 && importo <= saldoDisponibile">Confirm Withdrawal</span>
         </button>
       </div>
 

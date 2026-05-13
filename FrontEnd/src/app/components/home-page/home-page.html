@@ -141,7 +141,7 @@
           <div class="text-right">
             <p class="font-mono text-lg font-black tracking-tighter"
                [ngClass]="move.type === 'withdrawal' ? 'text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'text-green-400 drop-shadow-[0_0_10px_rgba(74,222,128,0.3)]'">
-              {{ move.type === 'withdrawal' ? '-' : '+' }}{{ move.amount | currency:'EUR':'symbol':'1.2-2' }}
+              {{ move.type === 'withdrawal' ? '' : '+' }}{{ move.amount | currency:'EUR':'symbol':'1.2-2' }}
             </p>
             <p class="text-[8px] text-white/20 font-mono uppercase mt-1">Status: SECURED</p>
           </div>
