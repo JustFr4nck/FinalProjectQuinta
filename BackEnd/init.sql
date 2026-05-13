@@ -1,8 +1,10 @@
 CREATE TABLE `accounts` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `owner_name` VARCHAR(255) NOT NULL,
+  `owner_name` VARCHAR(255) NOT NULL,   
+  `profile_image` VARCHAR(500),               
   `currency` CHAR(3) NOT NULL DEFAULT 'EUR',
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `key_log` VARCHAR(255),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
