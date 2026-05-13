@@ -46,12 +46,14 @@ export class HomePage implements OnInit {
 
       this.bankService.getTransactions(1).subscribe({
         next: (response: any) => {
-          this.movimenti = response;
+          this.movimenti = [...response].reverse();
         },
         error: (err) => {
            console.error("Error during call:", err);
         }
       })
+
+
 
       this.bankService.getConvUSD(1).subscribe({
         next:(response: any) => {
